@@ -1,0 +1,110 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 58px;
+  z-index: 100;
+  background: rgba(6, 12, 22, 0.97);
+  border-bottom: 1px solid #18304f;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem 0 0;
+  backdrop-filter: blur(14px);
+}
+
+.topbarLogo {
+  width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.25rem;
+  border-right: 1px solid #18304f;
+  height: 100%;
+}
+
+.topbarLogoText {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.topbarLogoText span {
+  color: #00d4ff;
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+}
+
+.topbarCenter {
+  flex: 1;
+  padding: 0 1.5rem;
+}
+
+.topbarTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #c8e6ff;
+  text-transform: uppercase;
+}
+
+.topbarSub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: #5a80a0;
+  margin-top: 0.1rem;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.clock {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  color: #5a80a0;
+  text-align: right;
+  line-height: 1.6;
+}
+
+.pulseBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.28rem 0.8rem;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 245, 155, 0.2);
+  background: rgba(0, 245, 155, 0.05);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem;
+  color: #00f59b;
+  white-space: nowrap;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+  padding-top: 58px;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  color: #c8e6ff;
+}

@@ -1,225 +1,163 @@
-# Sistema SLA Diego 🚀
+# Painel Engenharia — Brasil Digital
 
-Um sistema completo de monitoramento de SLA (Service Level Agreement) e Ordens de Serviço desenvolvido com **Python (FastAPI)**, **PostgreSQL (Supabase)** e **Frontend responsivo (HTML/CSS/JavaScript)**.
+Dashboard moderno para gestão de SLA e engenharia.
 
-## 📋 Características
+## 🚀 Deploy no Vercel
 
-- ✅ **Dashboard em tempo real** com métricas SLA
-- ✅ **Gerenciamento de Ordens de Serviço**
-- ✅ **API RESTful completa**
-- ✅ **Interface responsiva** (Desktop, Tablet, Mobile)
-- ✅ **Integração com Supabase PostgreSQL**
-- ✅ **Tema escuro moderno** com design futurista
+### Pré-requisitos
+- Conta no [Vercel](https://vercel.com)
+- Repositório GitHub com este projeto
 
-## 🛠️ Tech Stack
+### Passos para Deploy
 
-### Backend
-- **FastAPI** - Framework Python moderno
-- **Supabase** - PostgreSQL gerenciado
-- **Pydantic** - Validação de dados
-- **Uvicorn** - Servidor ASGI
+1. **Push seu projeto para GitHub**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push -u origin main
+   ```
 
-### Frontend
-- **HTML5** - Estrutura semântica
-- **CSS3** - Design responsivo
-- **Vanilla JavaScript** - Sem dependências
-- **Fetch API** - Requisições HTTP
+2. **Importe seu repositório no Vercel**
+   - Acesse https://vercel.com/new
+   - Conecte sua conta GitHub
+   - Selecione o repositório `projeto sla_ Diego`
+   - Clique em **Import**
+
+3. **Configure as variáveis de ambiente**
+   - No painel do Vercel, vá para **Settings** → **Environment Variables**
+   - Adicione:
+     - `NEXT_PUBLIC_SUPABASE_URL` - URL do seu projeto Supabase
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Chave anônima do Supabase
+
+4. **Deploy automático**
+   - Vercel fará o build automaticamente
+   - Seu site estará disponível em: `https://seu-projeto.vercel.app`
+
+---
+
+## 🗄️ Configurar Banco de Dados no Supabase
+
+### Passo 1: Criar Projeto no Supabase
+
+1. Acesse https://supabase.com
+2. Clique em **New Project**
+3. Preencha:
+   - **Project name**: `painel-engenharia`
+   - **Database password**: Crie uma senha forte
+   - **Region**: Selecione a região mais próxima
+4. Aguarde o projeto ser criado (2-3 minutos)
+
+### Passo 2: Executar o Schema SQL
+
+1. No painel do Supabase, vá para **SQL Editor**
+2. Clique em **New Query**
+3. Cole o conteúdo do arquivo `database.sql`
+4. Clique em **Run**
+
+### Passo 3: Obter as Credenciais
+
+1. Vá para **Settings** → **API**
+2. Copie:
+   - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
+   - **anon public** → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+### Passo 4: Adicionar ao seu `.env.local`
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+```
+
+---
+
+## 💻 Desenvolver Localmente
+
+```bash
+# Instalar dependências
+npm install
+
+# Rodar dev server
+npm run dev
+
+# Build para produção
+npm run build
+
+# Iniciar servidor de produção
+npm start
+```
+
+Acesse http://localhost:3000
+
+---
 
 ## 📁 Estrutura do Projeto
 
 ```
-projeto-sla-diego/
-├── backend/
-│   ├── app.py              # Aplicação FastAPI principal
-│   ├── config.py           # Configurações
-│   ├── database.py         # Conexão Supabase
-│   ├── models.py           # Modelos Pydantic
-│   ├── routes/
-│   │   ├── os_routes.py    # Rotas de Ordens de Serviço
-│   │   └── sla_routes.py   # Rotas de SLA
-│   └── requirements.txt
-├── frontend/
-│   ├── index.html          # Página principal
-│   ├── css/
-│   │   ├── styles.css      # Estilos principais
-│   │   └── responsive.css  # Estilos responsivos
-│   ├── js/
-│   │   ├── app.js          # Lógica principal
-│   │   └── api.js          # Cliente API
-│   └── assets/             # Imagens, ícones, etc
-├── .env                    # Variáveis de ambiente
-└── README.md
+projeto sla_ Diego/
+├── app/
+│   ├── layout.tsx          # Layout principal
+│   ├── page.tsx            # Página inicial
+│   └── page.module.css     # Estilos
+├── package.json            # Dependências
+├── next.config.js          # Config Next.js
+├── tsconfig.json           # Config TypeScript
+├── vercel.json             # Config Vercel
+├── database.sql            # Schema do BD
+├── .env.local.example      # Variáveis de exemplo
+└── README.md               # Este arquivo
 ```
-
-## 🚀 Como Começar
-
-### 1. **Pré-requisitos**
-- Python 3.8+
-- pip ou conda
-- Conta Supabase
-
-### 2. **Instalação**
-
-```bash
-# Navegar para a pasta backend
-cd backend
-
-# Instalar dependências
-pip install -r requirements.txt
-```
-
-### 3. **Configurar Variáveis de Ambiente**
-
-Editar `.env`:
-```env
-SUPABASE_URL=https://seu-projeto.supabase.co
-SUPABASE_KEY=sua-chave-publica
-DATABASE_URL=postgresql://usuario:senha@host:porta/banco
-FLASK_ENV=development
-DEBUG=True
-```
-
-### 4. **Criar Tabelas no Supabase**
-
-Execute este SQL no Supabase:
-
-```sql
--- Tabela de Ordens de Serviço
-CREATE TABLE ordens_servico (
-    id SERIAL PRIMARY KEY,
-    numero VARCHAR(50) NOT NULL UNIQUE,
-    assunto VARCHAR(255) NOT NULL,
-    status VARCHAR(50) DEFAULT 'pendente',
-    prioridade VARCHAR(20) DEFAULT 'media',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    data_conclusao TIMESTAMP,
-    responsavel VARCHAR(100),
-    sla_hours INTEGER DEFAULT 24,
-    cumprimento_sla BOOLEAN DEFAULT true,
-    descricao TEXT
-);
-
--- Tabela de Métricas SLA
-CREATE TABLE sla_metrics (
-    id SERIAL PRIMARY KEY,
-    assunto VARCHAR(255) NOT NULL,
-    quantidade INTEGER DEFAULT 0,
-    cumprimento_percentual FLOAT DEFAULT 0,
-    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Tabela de Usuários
-CREATE TABLE usuarios (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    role VARCHAR(20) DEFAULT 'user',
-    ativo BOOLEAN DEFAULT true,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-### 5. **Iniciar Backend**
-
-```bash
-python app.py
-```
-
-Backend estará disponível em: `http://localhost:8000`
-
-### 6. **Abrir Frontend**
-
-Abrir o arquivo `frontend/index.html` no navegador ou servir via HTTP.
-
-## 📚 API Endpoints
-
-### Ordens de Serviço
-
-```
-GET    /api/os              # Listar todas as OS
-GET    /api/os/{id}         # Obter uma OS específica
-POST   /api/os              # Criar nova OS
-PUT    /api/os/{id}         # Atualizar OS
-DELETE /api/os/{id}         # Deletar OS
-```
-
-### SLA
-
-```
-GET    /api/sla/metrics          # Obter métricas SLA
-GET    /api/sla/dashboard        # Dashboard SLA
-GET    /api/sla/por-assunto      # SLA por assunto
-```
-
-### Saúde
-
-```
-GET    /api/health          # Health check
-GET    /api               # Informações da API
-```
-
-## 📱 Responsividade
-
-O sistema é totalmente responsivo:
-
-- **Desktop** (1024px+): Layout completo com sidebar
-- **Tablet** (768px - 1023px): Layout adaptado
-- **Mobile** (480px - 767px): Menu colapsável
-- **Small Mobile** (-479px): Interface otimizada
-
-## 🎨 Design
-
-- **Tema Escuro**: Reduz fadiga ocular
-- **Cores Acentuadas**: Cyan, Green, Amber, Red para status
-- **Animações Suaves**: Transições elegantes
-- **Grid Background**: Efeito visual moderno
-
-## 🔐 Segurança
-
-⚠️ **Importante**: Esta é uma versão de desenvolvimento. Para produção:
-
-- [ ] Implementar autenticação JWT
-- [ ] Adicionar rate limiting
-- [ ] Usar HTTPS
-- [ ] Validação CORS adequada
-- [ ] Secrets em variáveis de ambiente seguras
-
-## 📊 Dados de Exemplo
-
-Para testar, insira dados de exemplo no Supabase:
-
-```sql
-INSERT INTO ordens_servico (numero, assunto, status, prioridade, responsavel, sla_hours, cumprimento_sla)
-VALUES
-    ('OS001', 'Instalação de fibra óptica', 'concluida', 'alta', 'Diego Matias', 24, true),
-    ('OS002', 'Manutenção de rede', 'em_andamento', 'media', 'Luis', 48, true),
-    ('OS003', 'Upgrade de equipamento', 'pendente', 'baixa', 'João', 72, false);
-```
-
-## 🐛 Troubleshooting
-
-### API não conecta
-- Verificar se FastAPI está rodando em `http://localhost:8000`
-- Confirmar credenciais do Supabase
-- Verificar variáveis de ambiente
-
-### Dados não carregam
-- Abrir Console do Navegador (F12)
-- Verificar erros na aba Network
-- Confirmar tabelas criadas no Supabase
-
-### CORS Error
-- Adicionar origem no `app.py`
-- Verificar `allow_origins` em CORS middleware
-
-## 📞 Contato
-
-Desenvolvido por **Diego Matias** - Brasil Digital
-
-## 📄 Licença
-
-MIT License - Sinta-se livre para usar e modificar!
 
 ---
 
-**Última atualização**: 20/03/2026
+## 🔑 Variáveis de Ambiente
+
+| Variável | Descrição |
+|----------|-----------|
+| `NEXT_PUBLIC_SUPABASE_URL` | URL do projeto Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Chave pública do Supabase |
+
+---
+
+## 📊 Tabelas do Banco de Dados
+
+### users
+- Usuários do sistema
+- Campos: `id`, `email`, `name`, `role`, `created_at`, `updated_at`
+
+### projects
+- Projetos gerenciados
+- Campos: `id`, `name`, `description`, `status`, `owner_id`, `created_at`, `updated_at`
+
+### tasks
+- Tarefas/SLAs
+- Campos: `id`, `project_id`, `title`, `description`, `status`, `priority`, `assigned_to`, `due_date`, `created_at`, `updated_at`
+
+### metrics
+- Métricas e indicadores
+- Campos: `id`, `project_id`, `metric_name`, `value`, `unit`, `recorded_at`, `created_at`
+
+### activity_logs
+- Log de atividades
+- Campos: `id`, `user_id`, `action`, `description`, `entity_type`, `entity_id`, `created_at`
+
+---
+
+## 🔐 Row Level Security (RLS)
+
+O banco de dados tem RLS habilitado para segurança. As policies já estão configuradas para:
+- Usuários verem apenas seus próprios dados
+- Donos de projetos gerenciarem suas tarefas
+- Usuários acessarem tarefas atribuídas a eles
+
+---
+
+## 🆘 Suporte
+
+Dúvidas? Verifique:
+- [Documentação Next.js](https://nextjs.org)
+- [Documentação Supabase](https://supabase.com/docs)
+- [Documentação Vercel](https://vercel.com/docs)
+
+---
+
+**Criado com ❤️ para Brasil Digital**
