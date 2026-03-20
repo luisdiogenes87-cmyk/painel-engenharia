@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel SLA - Diego</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- ═══ TOPBAR ════════════════════════════════════════ -->
+    <div class="topbar">
+        <div class="topbar-logo">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                <circle cx="17" cy="17" r="16" stroke="#18304f" stroke-width="1.5"/>
+                <path d="M5 17 Q10 8 17 17 Q24 26 29 17" stroke="#00d4ff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M5 17 Q10 24 17 17 Q24 10 29 17" stroke="#0081f1" stroke-width="1.1" fill="none" stroke-linecap="round" opacity=".55"/>
+                <circle cx="17" cy="17" r="2.5" fill="#00d4ff"/>
+            </svg>
+            <div class="topbar-logo-text">
+                Engenharia
+                <span>SLA Diego</span>
+            </div>
+        </div>
+        <div class="topbar-center">
+            <div class="topbar-title" id="pageTitle">Dashboard SLA</div>
+            <div class="topbar-sub">Sistema de Monitoramento em Tempo Real</div>
+        </div>
+        <div class="topbar-right">
+            <div class="clock">
+                <b id="clk-date">--</b><br>
+                <span id="clk-time">--:--:--</span>
+            </div>
+            <div class="pulse-badge">ATIVO</div>
+        </div>
+    </div>
+
+    <!-- ═══ LAYOUT ════════════════════════════════════════ -->
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-section-label">NAVEGAÇÃO</div>
+            <div class="nav-item active" data-page="dashboard">
+                <div class="nav-icon">📊</div>
+                <div class="nav-label">Dashboard</div>
+            </div>
+            <div class="nav-item" data-page="os">
+                <div class="nav-icon">📋</div>
+                <div class="nav-label">Ordens de Serviço</div>
+            </div>
+            <div class="nav-item" data-page="sla-metrics">
+                <div class="nav-icon">📈</div>
+                <div class="nav-label">Métricas SLA</div>
+            </div>
+            <div class="nav-item" data-page="settings">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-label">Configurações</div>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- DASHBOARD PAGE -->
+            <div id="dashboard" class="page-section active">
+                <div class="sec-header">
+                    <div class="sec-eyebrow">Overview</div>
+                    <h1 class="sec-h1">Dashboard <em>SLA</em></h1>
+                    <p class="sec-desc">Monitoramento em tempo real de ordens de serviço e cumprimento de SLA</p>
+                </div>
+
+                <div class="kpi-strip" id="kpiStrip">
+                    <div class="kpi">
+                        <div class="kpi-lbl">Total OS</div>
+                        <div class="kpi-val" id="kpi-total">0</div>
+                        <div class="kpi-sub">Todas as ordens</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-lbl">Pendentes</div>
+                        <div class="kpi-val c" id="kpi-pendentes">0</div>
+                        <div class="kpi-sub">Em aberto</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-lbl">Concluídas</div>
+                        <div class="kpi-val g" id="kpi-concluidas">0</div>
+                        <div class="kpi-sub">Finalizadas</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-lbl">Taxa SLA</div>
+                        <div class="kpi-val a" id="kpi-sla">0%</div>
+                        <div class="kpi-sub">Cumprimento</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-tag">Gráfico</div>
+                        <h2 class="card-h2">SLA por Assunto</h2>
+                        <canvas id="chartAssuntos"></canvas>
+                    </div>
+                    <div class="card">
+                        <div class="card-tag">Status</div>
+                        <h2 class="card-h2">Distribuição OS</h2>
+                        <canvas id="chartStatus"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OS PAGE -->
+            <div id="os" class="page-section">
+                <div class="sec-header">
+                    <div class="sec-eyebrow">Gerenciamento</div>
+                    <h1 class="sec-h1">Ordens de <em>Serviço</em></h1>
+                    <button class="btn-primary" id="btnNovaOS">+ Nova OS</button>
+                </div>
+
+                <div class="card">
+                    <div class="tbl-wrap">
+                        <table id="tableOS">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Número</th>
+                                    <th>Assunto</th>
+                                    <th>Status</th>
+                                    <th>Prioridade</th>
+                                    <th>Responsável</th>
+                                    <th>SLA</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="osTableBody">
+                                <tr><td colspan="8" style="text-align:center; color: var(--muted);">Carregando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLA METRICS PAGE -->
+            <div id="sla-metrics" class="page-section">
+                <div class="sec-header">
+                    <div class="sec-eyebrow">Análise</div>
+                    <h1 class="sec-h1">Métricas <em>SLA</em></h1>
+                </div>
+
+                <div class="prog-stack" id="slaMetricsContainer">
+                    <p style="color: var(--muted);">Carregando métricas...</p>
+                </div>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div id="settings" class="page-section">
+                <div class="sec-header">
+                    <div class="sec-eyebrow">Configuração</div>
+                    <h1 class="sec-h1">Ajustes do <em>Sistema</em></h1>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-h2">Informações da API</h2>
+                    <p>Status: <span id="apiStatus" style="color: var(--green);">Conectando...</span></p>
+                    <p>Versão: <span id="apiVersion" style="color: var(--accent);">--</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL NOVA OS -->
+    <div id="modalNovaOS" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Nova Ordem de Serviço</h2>
+            <form id="formNovaOS">
+                <input type="text" placeholder="Número da OS" id="inputNumero" required>
+                <input type="text" placeholder="Assunto" id="inputAssunto" required>
+                <select id="inputStatus">
+                    <option value="pendente">Pendente</option>
+                    <option value="em_andamento">Em Andamento</option>
+                    <option value="concluida">Concluída</option>
+                </select>
+                <select id="inputPrioridade">
+                    <option value="baixa">Baixa</option>
+                    <option value="media">Média</option>
+                    <option value="alta">Alta</option>
+                </select>
+                <input type="text" placeholder="Responsável" id="inputResponsavel" required>
+                <input type="number" placeholder="SLA (horas)" id="inputSLA" required>
+                <textarea placeholder="Descrição" id="inputDescricao"></textarea>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="submit" class="btn-primary">Salvar</button>
+                    <button type="button" class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>

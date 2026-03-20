@@ -1,0 +1,57 @@
+# Ambiente Virtual
+venv/
+env/
+ENV/
+*.pyc
+__pycache__/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Ambiente
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Arquivos Temporários
+*.tmp
+*.temp
+*.bak
+*~
+
+# Node modules (se usar npm)
+node_modules/
+npm-debug.log
+
+# Vercel
+.vercel/
+
+# Python
+*.egg-info/
+dist/
+build/
+
+# Arquivos de origem do projeto
+Engenharia-painel - Diego Matias.html
+
+# Scripts de deploy
+deploy.bat
+deploy.sh
+deploy_vercel.py
+deploy_vercel_simple.py
+setup_project.py
+
+# Documentação local (não precisa no repo)
+COMECE_AQUI.md
+DEPLOY_*.md
+DEPLOY_AGORA.txt

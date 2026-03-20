@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: sla-diego-api
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python -m uvicorn app:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: SUPABASE_URL
+        value: https://kunymezqdihlyldibawt.supabase.co
+      - key: SUPABASE_KEY
+        scope: all
+      - key: FLASK_ENV
+        value: production
+      - key: DEBUG
+        value: "False"
